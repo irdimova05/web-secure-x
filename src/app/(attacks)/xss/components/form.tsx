@@ -3,46 +3,116 @@
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { AttackSubmitButton } from "@/components/form/attack-submit-button";
+import { XSSSchema } from "../models/xss-schema.model";
 
-export function Form() {
-  const handleSubmit = (event: React.FormEvent) => {
-    event.preventDefault();
+export function XSSForm() {
+  const form = useForm<XSSSchema>({
+    resolver: zodResolver(XSSSchema),
+    defaultValues: {
+      url: "",
+      headers: "",
+      fieldSelector: "",
+      submitButtonSelector: "",
+    },
+  });
+
+  const handleSubmit = (values: XSSSchema) => {
     // Here you would handle the form submission
     console.log("Form submitted");
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
-      <div className="space-y-2">
-        <Label htmlFor="url" className="text-gray-300">
-          URL адрес
-        </Label>
-        <Input
-          id="url"
-          placeholder="https://example.com/vulnerable-page"
-          className="bg-gray-700 text-white border-gray-600"
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
+        <FormField
+          control={form.control}
+          name="url"
+          render={({ field }) => (
+            <FormItem className="space-y-2">
+              <FormLabel className="text-gray-300">URL адрес</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="https://example.com/login"
+                  className="bg-gray-700 text-white border-gray-600"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
         />
-      </div>
-      <div className="space-y-2">
-        <Label htmlFor="headers" className="text-gray-300">
-          Хедъри (Token/Cookie за автентикация)
-        </Label>
-        <Textarea
-          id="headers"
-          placeholder="Authorization: Bearer your_token_here&#10;Cookie: session=your_session_cookie"
-          className="bg-gray-700 text-white border-gray-600 min-h-[100px]"
+        <FormField
+          control={form.control}
+          name="headers"
+          render={({ field }) => (
+            <FormItem className="space-y-2">
+              <FormLabel className="text-gray-300">
+                Хедъри (Token/Cookie за автентикация)
+              </FormLabel>
+              <FormControl>
+                <Textarea
+                  placeholder="Authorization: Bearer your_token_here&#10;Cookie: session=your_session_cookie"
+                  className="bg-gray-700 text-white border-gray-600 min-h-[100px]"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
         />
-      </div>
-      <div className="space-y-2">
-        <Label htmlFor="inputSelector" className="text-gray-300">
-          Селектор на входното поле
-        </Label>
-        <Input
-          id="inputSelector"
-          placeholder="#comment-input"
-          className="bg-gray-700 text-white border-gray-600"
+        <FormField
+          control={form.control}
+          name="fieldSelector"
+          render={({ field }) => (
+            <FormItem className="space-y-2">
+              <FormLabel className="text-gray-300">
+                Селектор на входното поле
+              </FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="#search-input"
+                  className="bg-gray-700 text-white border-gray-600"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
         />
-      </div>
-    </form>
+        <FormField
+          control={form.control}
+          name="submitButtonSelector"
+          render={({ field }) => (
+            <FormItem className="space-y-2">
+              <FormLabel className="text-gray-300">
+                Селектор на "submit" бутон
+              </FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="#button"
+                  className="bg-gray-700 text-white border-gray-600"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <div className="space-y-2">
+          <AttackSubmitButton />
+        </div>
+      </form>
+    </Form>
   );
 }

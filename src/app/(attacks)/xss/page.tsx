@@ -2,12 +2,10 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { AttackSubmitButton } from "@/components/form/attack-submit-button";
-import { Form } from "./components/form";
+import { XSSForm } from "./components/form";
 import { Metadata } from "next";
 
 export default function XSS() {
@@ -28,11 +26,8 @@ export default function XSS() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <Form />
+          <XSSForm />
         </CardContent>
-        <CardFooter>
-          <AttackSubmitButton />
-        </CardFooter>
       </Card>
     </main>
   );
