@@ -8,6 +8,7 @@ import {
 } from "@/components/ui/card";
 import { AttackSubmitButton } from "@/components/form/attack-submit-button";
 import { Form } from "./components/form";
+import { Metadata } from "next";
 
 export default function XSS() {
   return (
@@ -36,3 +37,7 @@ export default function XSS() {
     </main>
   );
 }
+
+export const metadata: Metadata = {
+  title: "Тест на XSS Атака",
+};

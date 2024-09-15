@@ -6,6 +6,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { SQLInjectionForm } from "./components/form";
+import { Metadata } from "next";
 
 export default function SQLInjection() {
   return (
@@ -30,3 +31,7 @@ export default function SQLInjection() {
     </main>
   );
 }
+
+export const metadata: Metadata = {
+  title: "Тест на SQL Инжекция",
+};

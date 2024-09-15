@@ -6,6 +6,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { BruteForceForm } from "./components/form";
+import { Metadata } from "next";
 
 export default function BruteForce() {
   return (
@@ -30,3 +31,7 @@ export default function BruteForce() {
     </main>
   );
 }
+
+export const metadata: Metadata = {
+  title: "Тест на Брутфорс Атака",
+};
