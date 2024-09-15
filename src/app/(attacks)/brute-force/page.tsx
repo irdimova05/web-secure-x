@@ -2,13 +2,10 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Form } from "./components/form";
-import { AttackSubmitButton } from "@/components/form/attack-submit-button";
+import { BruteForceForm } from "./components/form";
 
 export default function BruteForce() {
   return (
@@ -27,11 +24,8 @@ export default function BruteForce() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <Form />
+          <BruteForceForm />
         </CardContent>
-        <CardFooter>
-          <AttackSubmitButton />
-        </CardFooter>
       </Card>
     </main>
   );
