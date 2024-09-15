@@ -6,7 +6,7 @@ import { useForm } from "react-hook-form";
 import {
   bruteForceSchema,
   BruteForceSchema,
-} from "../models/brute-force-from.model";
+} from "../models/brute-force-schema.model";
 import {
   Form,
   FormControl,
@@ -132,7 +132,9 @@ export function BruteForceForm() {
             </FormItem>
           )}
         />
-        <AttackSubmitButton />
+        <div className="space-y-2">
+          <AttackSubmitButton />
+        </div>
       </form>
     </Form>
   );

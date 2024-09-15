@@ -2,12 +2,10 @@ import {
   Card,
   CardContent,
   CardDescription,
-  CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Form } from "./components/form";
-import { AttackSubmitButton } from "@/components/form/attack-submit-button";
+import { SQLInjectionForm } from "./components/form";
 
 export default function SQLInjection() {
   return (
@@ -26,11 +24,8 @@ export default function SQLInjection() {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <Form />
+          <SQLInjectionForm />
         </CardContent>
-        <CardFooter>
-          <AttackSubmitButton />
-        </CardFooter>
       </Card>
     </main>
   );
