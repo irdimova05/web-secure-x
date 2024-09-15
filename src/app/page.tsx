@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
-export default function Component() {
+export default function HomePage() {
   const attacks = [
     {
       title: "Брутфорс атака",
