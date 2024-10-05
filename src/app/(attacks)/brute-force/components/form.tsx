@@ -30,10 +30,10 @@ export function BruteForceForm() {
     },
   });
 
-  const handleSubmit = (values: BruteForceSchema) => {
+  const handleSubmit = async (values: BruteForceSchema) => {
     // Here you would handle the form submission
     console.log("Form submitted");
-    submitBruteForceForm(values);
+    console.log(await submitBruteForceForm(values));
   };
 
   return (
