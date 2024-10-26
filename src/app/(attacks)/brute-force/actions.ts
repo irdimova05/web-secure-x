@@ -3,16 +3,15 @@
 import puppeteer from "puppeteer";
 import { BruteForceSchema } from "./models/brute-force-schema.model";
 import { generatePasswords } from "./utils/generate-passwords.util";
+import { openPage } from "@/lib/utils/open-page.util";
+import { fillLogin } from "@/lib/utils/fill-login.util";
+import { loginSchema } from "@/lib/models/login-schema.model";
 
 export async function submitBruteForceForm(data: BruteForceSchema) {
-  const browser = await puppeteer.launch({
-    headless: false,
-  });
-  const pages = await browser.pages();
-  const page = pages[0];
+  const { page, browser } = await openPage();
 
   // Navigate the page to a URL
-  await page.goto(data.url, { waitUntil: "networkidle0" });
+  await page.goto(data.loginUrl, { waitUntil: "networkidle0" });
   await page.waitForSelector(data.loginFieldSelector);
 
   const passwords = generatePasswords();
@@ -22,14 +21,11 @@ export async function submitBruteForceForm(data: BruteForceSchema) {
   for (const password of passwords) {
     await page.waitForNetworkIdle();
 
-    if (page.url() !== data.url) {
+    if (page.url() !== data.loginUrl) {
       break;
     }
 
-    await page.locator(data.loginFieldSelector).fill(data.loginName);
-    await page.locator(data.passwordFieldSelector).fill(password);
-
-    await page.locator(data.loginButtonSelector).click();
+    await fillLogin(page, data, password);
 
     const response = await page.waitForResponse((response) => {
       const request = response.request();

@@ -22,7 +22,7 @@ export function BruteForceForm() {
   const form = useForm<BruteForceSchema>({
     resolver: zodResolver(bruteForceSchema),
     defaultValues: {
-      url: "",
+      loginUrl: "",
       loginName: "",
       loginFieldSelector: "",
       passwordFieldSelector: "",
@@ -41,7 +41,7 @@ export function BruteForceForm() {
       <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
         <FormField
           control={form.control}
-          name="url"
+          name="loginUrl"
           render={({ field }) => (
             <FormItem className="space-y-2">
               <FormLabel className="text-gray-300">URL адрес</FormLabel>

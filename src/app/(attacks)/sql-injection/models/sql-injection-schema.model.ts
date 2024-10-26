@@ -1,6 +1,7 @@
 import { z } from "zod";
+import { loginSchema } from "../../../../lib/models/login-schema.model";
 
-export const SQLInjectionSchema = z.object({
+export const SQLInjectionSchema = loginSchema.extend({
   url: z
     .string({
       invalid_type_error: "Невалиден URL адрес.",
@@ -8,7 +9,7 @@ export const SQLInjectionSchema = z.object({
     })
     .url("Невалиден URL адрес.")
     .min(1, "Полето е задължително."),
-  headers: z
+  password: z
     .string({
       invalid_type_error: "Полето съдържа невалидни данни.",
       required_error: "Полето е задължително.",

@@ -1,27 +1,32 @@
-import { loginSchema } from "@/lib/models/login-schema.model";
 import { z } from "zod";
 
-export const XSSSchema = loginSchema.extend({
-  url: z
+export const loginSchema = z.object({
+  loginUrl: z
     .string({
       invalid_type_error: "Невалиден URL адрес.",
       required_error: "Полето е задължително.",
     })
     .url("Невалиден URL адрес.")
     .min(1, "Полето е задължително."),
-  password: z
+  loginName: z
     .string({
       invalid_type_error: "Полето съдържа невалидни данни.",
       required_error: "Полето е задължително.",
     })
     .min(1, "Полето е задължително."),
-  fieldSelector: z
+  loginFieldSelector: z
     .string({
       invalid_type_error: "Полето съдържа невалидни данни.",
       required_error: "Полето е задължително.",
     })
     .min(1, "Полето е задължително."),
-  submitButtonSelector: z
+  passwordFieldSelector: z
+    .string({
+      invalid_type_error: "Полето съдържа невалидни данни.",
+      required_error: "Полето е задължително.",
+    })
+    .min(1, "Полето е задължително."),
+  loginButtonSelector: z
     .string({
       invalid_type_error: "Полето съдържа невалидни данни.",
       required_error: "Полето е задължително.",
@@ -29,4 +34,4 @@ export const XSSSchema = loginSchema.extend({
     .min(1, "Полето е задължително."),
 });
 
-export type XSSSchema = z.infer<typeof XSSSchema>;
+export type LoginSchema = z.infer<typeof loginSchema>;
