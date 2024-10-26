@@ -20,6 +20,8 @@ export async function submitBruteForceForm(data: BruteForceSchema) {
   const responses = [];
 
   for (const password of passwords) {
+    await page.waitForNetworkIdle();
+
     if (page.url() !== data.url) {
       break;
     }
@@ -27,9 +29,10 @@ export async function submitBruteForceForm(data: BruteForceSchema) {
     await page.locator(data.loginFieldSelector).fill(data.loginName);
     await page.locator(data.passwordFieldSelector).fill(password);
 
-    page.locator(data.loginButtonSelector).click();
+    await page.locator(data.loginButtonSelector).click();
 
-    const request = await page.waitForRequest((request) => {
+    const response = await page.waitForResponse((response) => {
+      const request = response.request();
       const postData = request.postData();
 
       if (postData) {
@@ -44,10 +47,6 @@ export async function submitBruteForceForm(data: BruteForceSchema) {
         request.url().includes(encodeURIComponent(password))
       );
     });
-
-    const response = await page.waitForResponse(
-      (response) => response.url() === request.url()
-    );
 
     responses.push({
       login: data.loginName,
