@@ -24,6 +24,12 @@ export const SQLInjectionSchema = loginSchema.extend({
   submitButtonSelector: z
     .string({
       invalid_type_error: "Полето съдържа невалидни данни.",
+    })
+    .optional(),
+  queryType: z.enum(["select", "insert", "update"]),
+  resultsString: z
+    .string({
+      invalid_type_error: "Полето съдържа невалидни данни.",
       required_error: "Полето е задължително.",
     })
     .min(1, "Полето е задължително."),

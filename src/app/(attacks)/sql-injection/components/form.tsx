@@ -13,6 +13,14 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SQLInjectionSchema } from "../models/sql-injection-schema.model";
 import { AttackSubmitButton } from "@/components/form/attack-submit-button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { submitSQLInjForm } from "../actions";
 
 export function SQLInjectionForm() {
   const form = useForm<SQLInjectionSchema>({
@@ -27,12 +35,15 @@ export function SQLInjectionForm() {
       url: "",
       fieldSelector: "",
       submitButtonSelector: "",
+      queryType: "select",
+      resultsString: "",
     },
   });
 
-  const handleSubmit = (values: SQLInjectionSchema) => {
+  const handleSubmit = async (values: SQLInjectionSchema) => {
     // Here you would handle the form submission
     console.log("Form submitted");
+    console.log(await submitSQLInjForm(values));
   };
 
   return (
@@ -197,6 +208,46 @@ export function SQLInjectionForm() {
               <FormControl>
                 <Input
                   placeholder="#button"
+                  className="bg-gray-700 text-white border-gray-600"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="queryType"
+          render={({ field }) => (
+            <FormItem className="space-y-2">
+              <FormLabel className="text-gray-300">Вид на зявката</FormLabel>
+              <Select onValueChange={field.onChange} defaultValue={field.value}>
+                <FormControl>
+                  <SelectTrigger className="bg-gray-700 text-white border-gray-600">
+                    <SelectValue placeholder="Вид на заявката" />
+                  </SelectTrigger>
+                </FormControl>
+                <SelectContent>
+                  <SelectItem value="select">Select</SelectItem>
+                  <SelectItem value="insert">Insert</SelectItem>
+                  <SelectItem value="update">Update</SelectItem>
+                </SelectContent>
+              </Select>
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="resultsString"
+          render={({ field }) => (
+            <FormItem className="space-y-2">
+              <FormLabel className="text-gray-300">
+                Текст при липса на резултати
+              </FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="Няма намерени резултати"
                   className="bg-gray-700 text-white border-gray-600"
                   {...field}
                 />

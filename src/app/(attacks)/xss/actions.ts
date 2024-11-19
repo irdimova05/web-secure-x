@@ -16,5 +16,7 @@ export async function submitBruteForceForm(data: XSSSchema) {
 
   await page.waitForNetworkIdle();
   await page.goto(data.url, { waitUntil: "networkidle0" });
-  await page.locator(data.fieldSelector).fill("<script>XSS attack</script>");
+  await page
+    .locator(data.fieldSelector)
+    .fill("<script>alert('XSS attack success')</script>");
 }

