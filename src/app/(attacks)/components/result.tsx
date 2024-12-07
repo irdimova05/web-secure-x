@@ -13,21 +13,21 @@ export const Result = () => {
     <Card className="bg-gray-800 border-green-500 border shadow-lg">
       <CardHeader>
         <CardTitle className="text-2xl font-bold text-green-500">
-          Резултати от XSS Атака
+          Резултати от теста
         </CardTitle>
       </CardHeader>
-      <CardContent>
+      <CardContent className="text-gray-300">
         {"status" in result ? result.status : null}
 
         {"responses" in result ? (
-          <ResponsesTable responses={result.responses} />
+          <ResponsesMap responses={result.responses} />
         ) : null}
       </CardContent>
     </Card>
   );
 };
 
-const ResponsesTable = ({ responses }: { responses: ResultResponses }) => {
+const ResponsesMap = ({ responses }: { responses: ResultResponses }) => {
   return responses.map((response, index) => {
     return (
       <p>{`${index + 1}. ${response.login}; ${response.password} -> ${

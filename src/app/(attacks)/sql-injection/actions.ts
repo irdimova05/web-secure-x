@@ -30,17 +30,17 @@ export async function submitSQLInjForm(data: SQLInjectionSchema) {
     await browser.close();
 
     if (resultElement) {
-      return { status: "Unsuccessful" };
+      return { status: "Неуспешна атака" };
     }
 
     return {
-      status: "Successful",
+      status: "Успешна атака",
     };
   }
 
   await browser.close();
 
   return {
-    status: "Not implemented yet",
+    status: "Бъдеща разработка",
   };
 }

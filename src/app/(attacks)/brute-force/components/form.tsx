@@ -142,11 +142,11 @@ export function BruteForceForm() {
           render={({ field }) => (
             <FormItem className="space-y-2">
               <FormLabel className="text-gray-300">
-                Текст при липса на резултати
+                Текст от екран след успешно вписване
               </FormLabel>
               <FormControl>
                 <Input
-                  placeholder="Няма намерени резултати"
+                  placeholder="Текст от екран след успешно вписване"
                   className="bg-gray-700 text-white border-gray-600"
                   {...field}
                 />

@@ -45,10 +45,10 @@ export async function submitXSSForm(data: XSSSchema) {
   await browser.close();
 
   if (!isXSSExecuted) {
-    return { status: "Unsuccessful" };
+    return { status: "Неуспешна атака" };
   }
 
   return {
-    status: "Successful",
+    status: "Успешна атака",
   };
 }

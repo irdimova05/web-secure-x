@@ -52,7 +52,7 @@ export async function submitBruteForceForm(data: BruteForceSchema) {
       login: data.loginName,
       password,
       // statusCode: response.status(),
-      status: resultElement ? "Successful" : "Unsuccessful",
+      status: resultElement ? "Успешна атака" : "Неуспешна атака",
     });
   }
 
