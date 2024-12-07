@@ -28,6 +28,7 @@ export function BruteForceForm() {
       loginFieldSelector: "",
       passwordFieldSelector: "",
       loginButtonSelector: "",
+      resultsString: "",
     },
   });
 
@@ -127,6 +128,25 @@ export function BruteForceForm() {
               <FormControl>
                 <Input
                   placeholder="#login-button"
+                  className="bg-gray-700 text-white border-gray-600"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="resultsString"
+          render={({ field }) => (
+            <FormItem className="space-y-2">
+              <FormLabel className="text-gray-300">
+                Текст при липса на резултати
+              </FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="Няма намерени резултати"
                   className="bg-gray-700 text-white border-gray-600"
                   {...field}
                 />

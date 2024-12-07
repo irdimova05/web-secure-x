@@ -27,27 +27,32 @@ export async function submitBruteForceForm(data: BruteForceSchema) {
 
     await fillLogin(page, data, password);
 
-    const response = await page.waitForResponse((response) => {
-      const request = response.request();
-      const postData = request.postData();
+    // const response = await page.waitForResponse((response) => {
+    //   const request = response.request();
+    //   const postData = request.postData();
 
-      if (postData) {
-        return (
-          postData.includes(encodeURIComponent(data.loginName)) &&
-          postData.includes(encodeURIComponent(password))
-        );
-      }
+    //   if (postData) {
+    //     return (
+    //       postData.includes(encodeURIComponent(data.loginName)) &&
+    //       postData.includes(encodeURIComponent(password))
+    //     );
+    //   }
 
-      return (
-        request.url().includes(encodeURIComponent(data.loginName)) &&
-        request.url().includes(encodeURIComponent(password))
-      );
-    });
+    //   return (
+    //     request.url().includes(encodeURIComponent(data.loginName)) &&
+    //     request.url().includes(encodeURIComponent(password))
+    //   );
+    // });
+
+    await page.waitForNetworkIdle();
+
+    const resultElement = await page.$(`::-p-text(${data.resultsString})`);
 
     responses.push({
       login: data.loginName,
       password,
-      statusCode: response.status(),
+      // statusCode: response.status(),
+      status: resultElement ? "Successful" : "Unsuccessful",
     });
   }
 

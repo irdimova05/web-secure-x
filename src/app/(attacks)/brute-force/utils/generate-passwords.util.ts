@@ -1,7 +1,7 @@
 import { generateCombinations } from "./generate-combinations.utils";
 
 export function generatePasswords() {
-  if (process.env.BRUTE_FORCE_DEMO_DATA) {
+  if (process.env.BRUTE_FORCE_DEMO_DATA === "true") {
     return [
       "asdfsas",
       "djdjdjd",
@@ -23,5 +23,5 @@ export function generatePasswords() {
   const stopLen = Math.floor(Math.random() * 20);
   const passwords = generateCombinations(chars, startLen, stopLen);
 
-  return passwords;
+  return passwords.slice(0, 10);
 }

@@ -33,12 +33,12 @@ export async function submitSQLInjForm(data: SQLInjectionSchema) {
       return { status: "Unsuccessful" };
     }
 
-    await browser.close();
-
     return {
       status: "Successful",
     };
   }
+
+  await browser.close();
 
   return {
     status: "Not implemented yet",

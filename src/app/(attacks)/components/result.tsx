@@ -31,7 +31,7 @@ const ResponsesTable = ({ responses }: { responses: ResultResponses }) => {
   return responses.map((response, index) => {
     return (
       <p>{`${index + 1}. ${response.login}; ${response.password} -> ${
-        response.statusCode
+        response.status
       }`}</p>
     );
   });

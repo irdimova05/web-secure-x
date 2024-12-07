@@ -12,7 +12,7 @@ import {
 export type ResultResponses = {
   login: string;
   password: string;
-  statusCode: number;
+  status: string;
 }[];
 
 type Result =
