@@ -27,9 +27,13 @@ export async function submitSQLInjForm(data: SQLInjectionSchema) {
 
     const resultElement = await page.$(`::-p-text(${data.resultsString})`);
 
+    await browser.close();
+
     if (resultElement) {
       return { status: "Unsuccessful" };
     }
+
+    await browser.close();
 
     return {
       status: "Successful",
@@ -37,6 +41,6 @@ export async function submitSQLInjForm(data: SQLInjectionSchema) {
   }
 
   return {
-    error: "Not implemented yet",
+    status: "Not implemented yet",
   };
 }

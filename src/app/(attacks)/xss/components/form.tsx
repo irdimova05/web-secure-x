@@ -14,6 +14,8 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AttackSubmitButton } from "@/components/form/attack-submit-button";
 import { XSSSchema } from "../models/xss-schema.model";
+import { submitXSSForm } from "../actions";
+import { useResult } from "../../components/result.provider";
 
 export function XSSForm() {
   const form = useForm<XSSSchema>({
@@ -31,9 +33,11 @@ export function XSSForm() {
     },
   });
 
-  const handleSubmit = (values: XSSSchema) => {
-    // Here you would handle the form submission
+  const { setResult } = useResult();
+
+  const handleSubmit = async (values: XSSSchema) => {
     console.log("Form submitted");
+    setResult(await submitXSSForm(values));
   };
 
   return (

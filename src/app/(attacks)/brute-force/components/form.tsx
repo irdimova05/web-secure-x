@@ -17,6 +17,7 @@ import {
 } from "@/components/ui/form";
 import { submitBruteForceForm } from "../actions";
 import { AttackSubmitButton } from "@/components/form/attack-submit-button";
+import { useResult } from "../../components/result.provider";
 
 export function BruteForceForm() {
   const form = useForm<BruteForceSchema>({
@@ -30,10 +31,12 @@ export function BruteForceForm() {
     },
   });
 
+  const { setResult } = useResult();
+
   const handleSubmit = async (values: BruteForceSchema) => {
     // Here you would handle the form submission
     console.log("Form submitted");
-    console.log(await submitBruteForceForm(values));
+    setResult(await submitBruteForceForm(values));
   };
 
   return (

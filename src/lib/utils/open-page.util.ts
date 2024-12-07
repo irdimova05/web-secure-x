@@ -3,6 +3,7 @@ import puppeteer from "puppeteer";
 export async function openPage() {
   const browser = await puppeteer.launch({
     headless: false,
+    args: ["--incognito"],
   });
   const pages = await browser.pages();
   const page = pages[0];

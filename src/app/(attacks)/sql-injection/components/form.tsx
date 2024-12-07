@@ -13,6 +13,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { SQLInjectionSchema } from "../models/sql-injection-schema.model";
 import { AttackSubmitButton } from "@/components/form/attack-submit-button";
+import { useResult } from "../../components/result.provider";
 import {
   Select,
   SelectContent,
@@ -40,10 +41,12 @@ export function SQLInjectionForm() {
     },
   });
 
+  const { setResult } = useResult();
+
   const handleSubmit = async (values: SQLInjectionSchema) => {
     // Here you would handle the form submission
     console.log("Form submitted");
-    console.log(await submitSQLInjForm(values));
+    setResult(await submitSQLInjForm(values));
   };
 
   return (
