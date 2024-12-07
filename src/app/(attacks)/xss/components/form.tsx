@@ -1,7 +1,6 @@
 "use client";
 
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import {
   Form,
@@ -15,21 +14,30 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AttackSubmitButton } from "@/components/form/attack-submit-button";
 import { XSSSchema } from "../models/xss-schema.model";
+import { submitXSSForm } from "../actions";
+import { useResult } from "../../components/result.provider";
 
 export function XSSForm() {
   const form = useForm<XSSSchema>({
     resolver: zodResolver(XSSSchema),
     defaultValues: {
+      loginUrl: "",
+      loginName: "",
+      loginFieldSelector: "",
+      passwordFieldSelector: "",
+      loginButtonSelector: "",
+      password: "",
       url: "",
-      headers: "",
       fieldSelector: "",
       submitButtonSelector: "",
     },
   });
 
-  const handleSubmit = (values: XSSSchema) => {
-    // Here you would handle the form submission
+  const { setResult } = useResult();
+
+  const handleSubmit = async (values: XSSSchema) => {
     console.log("Form submitted");
+    setResult(await submitXSSForm(values));
   };
 
   return (
@@ -37,7 +45,7 @@ export function XSSForm() {
       <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
         <FormField
           control={form.control}
-          name="url"
+          name="loginUrl"
           render={({ field }) => (
             <FormItem className="space-y-2">
               <FormLabel className="text-gray-300">URL адрес</FormLabel>
@@ -54,16 +62,107 @@ export function XSSForm() {
         />
         <FormField
           control={form.control}
-          name="headers"
+          name="loginName"
           render={({ field }) => (
             <FormItem className="space-y-2">
               <FormLabel className="text-gray-300">
-                Хедъри (Token/Cookie за автентикация)
+                Потребителско име/имейл
               </FormLabel>
               <FormControl>
-                <Textarea
-                  placeholder="Authorization: Bearer your_token_here&#10;Cookie: session=your_session_cookie"
-                  className="bg-gray-700 text-white border-gray-600 min-h-[100px]"
+                <Input
+                  placeholder="admin@example.com"
+                  className="bg-gray-700 text-white border-gray-600"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="loginFieldSelector"
+          render={({ field }) => (
+            <FormItem className="space-y-2">
+              <FormLabel className="text-gray-300">
+                Селектор на полето за потребителско име/имейл
+              </FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="#username"
+                  className="bg-gray-700 text-white border-gray-600"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="password"
+          render={({ field }) => (
+            <FormItem className="space-y-2">
+              <FormLabel className="text-gray-300">Парола</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="password"
+                  className="bg-gray-700 text-white border-gray-600"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="passwordFieldSelector"
+          render={({ field }) => (
+            <FormItem className="space-y-2">
+              <FormLabel className="text-gray-300">
+                Селектор на полето за парола
+              </FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="#password"
+                  className="bg-gray-700 text-white border-gray-600"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="loginButtonSelector"
+          render={({ field }) => (
+            <FormItem className="space-y-2">
+              <FormLabel className="text-gray-300">
+                Селектор на бутона за вход
+              </FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="#login-button"
+                  className="bg-gray-700 text-white border-gray-600"
+                  {...field}
+                />
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+        <FormField
+          control={form.control}
+          name="url"
+          render={({ field }) => (
+            <FormItem className="space-y-2">
+              <FormLabel className="text-gray-300">URL адрес</FormLabel>
+              <FormControl>
+                <Input
+                  placeholder="https://example.com/login"
+                  className="bg-gray-700 text-white border-gray-600"
                   {...field}
                 />
               </FormControl>

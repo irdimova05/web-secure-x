@@ -17,12 +17,13 @@ import {
 } from "@/components/ui/form";
 import { submitBruteForceForm } from "../actions";
 import { AttackSubmitButton } from "@/components/form/attack-submit-button";
+import { useResult } from "../../components/result.provider";
 
 export function BruteForceForm() {
   const form = useForm<BruteForceSchema>({
     resolver: zodResolver(bruteForceSchema),
     defaultValues: {
-      url: "",
+      loginUrl: "",
       loginName: "",
       loginFieldSelector: "",
       passwordFieldSelector: "",
@@ -30,10 +31,12 @@ export function BruteForceForm() {
     },
   });
 
-  const handleSubmit = (values: BruteForceSchema) => {
+  const { setResult } = useResult();
+
+  const handleSubmit = async (values: BruteForceSchema) => {
     // Here you would handle the form submission
     console.log("Form submitted");
-    submitBruteForceForm(values);
+    setResult(await submitBruteForceForm(values));
   };
 
   return (
@@ -41,7 +44,7 @@ export function BruteForceForm() {
       <form onSubmit={form.handleSubmit(handleSubmit)} className="space-y-4">
         <FormField
           control={form.control}
-          name="url"
+          name="loginUrl"
           render={({ field }) => (
             <FormItem className="space-y-2">
               <FormLabel className="text-gray-300">URL адрес</FormLabel>

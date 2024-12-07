@@ -1,6 +1,7 @@
+import { loginSchema } from "@/lib/models/login-schema.model";
 import { z } from "zod";
 
-export const XSSSchema = z.object({
+export const XSSSchema = loginSchema.extend({
   url: z
     .string({
       invalid_type_error: "Невалиден URL адрес.",
@@ -8,7 +9,7 @@ export const XSSSchema = z.object({
     })
     .url("Невалиден URL адрес.")
     .min(1, "Полето е задължително."),
-  headers: z
+  password: z
     .string({
       invalid_type_error: "Полето съдържа невалидни данни.",
       required_error: "Полето е задължително.",
